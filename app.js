@@ -18,7 +18,7 @@ const limiter = rateLimit({
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/', { // put db name
+mongoose.connect('mongodb://localhost:27017/news', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
