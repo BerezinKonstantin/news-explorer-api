@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 
+const router = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
@@ -29,7 +30,7 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-// Routes
+app.use('/', router);
 
 app.use(errorLogger);
 
