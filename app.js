@@ -3,28 +3,24 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 
 const router = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const rateLimiter = require('./middlewares/rateLimiter');
+const serverErrMsg = require('./constants/errMessages');
 
-const { PORT = 3000 } = process.env;
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-});
+const { PORT = 3000, DATA_BASE } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/news', {
+mongoose.connect(DATA_BASE, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
 });
 
-app.use(limiter);
+app.use(rateLimiter);
 app.use(helmet());
 app.use(bodyParser.json());
 
@@ -45,10 +41,8 @@ app.use((err, req, res, next) => {
     .status(statusCode)
     .send({
       // проверяем статус и выставляем сообщение в зависимости от него
-      message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
+      message: statusCode === 500 ? serverErrMsg : message,
     });
 });
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+app.listen(PORT);
