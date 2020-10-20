@@ -1,6 +1,6 @@
 const User = require('../models/users');
 const NotFoundError = require('../middlewares/errorHandlers/notFoundError');
-const notFoundUserErrMsg = require('../constants/errMessages');
+const { notFoundUserErrMsg } = require('../constants/errMessages');
 
 const getUserInfo = (req, res, next) => {
   User.findOne({ _id: req.user._id })

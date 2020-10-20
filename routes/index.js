@@ -5,7 +5,7 @@ const articleRouter = require('./articles');
 const signUp = require('../controllers/signup');
 const signIn = require('../controllers/signin');
 const auth = require('../middlewares/auth');
-const notFoundPageErrMsg = require('../constants/errMessages');
+const { notFoundPageErrMsg } = require('../constants/errMessages');
 
 router.post(
   '/signin',

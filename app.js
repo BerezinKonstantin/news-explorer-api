@@ -8,7 +8,7 @@ const { errors } = require('celebrate');
 const router = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./middlewares/rateLimiter');
-const serverErrMsg = require('./constants/errMessages');
+const { serverErrMsg } = require('./constants/errMessages');
 
 const { PORT = 3000, DATA_BASE } = process.env;
 
