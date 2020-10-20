@@ -9,12 +9,13 @@ const router = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./middlewares/rateLimiter');
 const { serverErrMsg } = require('./constants/errMessages');
+const { dataBase } = require('./constants/config');
 
-const { PORT = 3000, DATA_BASE } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
-mongoose.connect(DATA_BASE, {
+mongoose.connect(dataBase, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
