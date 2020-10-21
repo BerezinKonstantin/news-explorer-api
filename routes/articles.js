@@ -7,7 +7,9 @@ const {
 } = require('../controllers/articles');
 
 articleRouter.get('/', getAllArticles);
-articleRouter.delete('/:articleId', deleteArticle);
+articleRouter.delete('/:articleId', celebrate({
+  params: Joi.object().keys({ articleId: Joi.string().alphanum().length(24) }),
+}), deleteArticle);
 articleRouter.post(
   '/',
   celebrate({

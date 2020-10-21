@@ -3,8 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/users');
 const AuthError = require('../middlewares/errorHandlers/authError');
 const { wrongAuthErrMsg } = require('../constants/errMessages');
-
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET } = require('../constants/config');
 
 const signIn = (req, res, next) => {
   const { email, password } = req.body;
@@ -20,7 +19,7 @@ const signIn = (req, res, next) => {
           }
           const token = jwt.sign(
             { _id: user._id },
-            NODE_ENV === 'production' ? JWT_SECRET : 'very-secret-key',
+            JWT_SECRET,
             { expiresIn: '7d' },
           );
           res.cookie('token', token, { httpOnly: true, sameSite: true });

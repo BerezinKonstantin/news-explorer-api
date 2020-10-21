@@ -1,7 +1,7 @@
 const Article = require('../models/articles');
 const NotFoundError = require('../middlewares/errorHandlers/notFoundError');
 const WrongDataError = require('../middlewares/errorHandlers/wrongDataError');
-const ForbidenError = require('../middlewares/errorHandlers/wrongDataError');
+const ForbidenError = require('../middlewares/errorHandlers/forbidenError');
 const { notFoundArticleErrMsg, forbidenErrMsg, wrongDataErrMsg } = require('../constants/errMessages');
 
 const getAllArticles = (req, res, next) => {
@@ -15,11 +15,13 @@ const getAllArticles = (req, res, next) => {
 };
 
 const deleteArticle = (req, res, next) => {
-  Article.findOne({ _id: req.params.articleId })
+  Article.findOne({ _id: req.params.articleId }).select('+owner')
     .orFail(new NotFoundError(notFoundArticleErrMsg))
     .then((article) => {
-      if (String(article.owner) !== req.user._id) throw new ForbidenError(forbidenErrMsg);
-      return Article.findOneAndDelete(article._id);
+      if (String(article.owner) !== req.user._id) {
+        throw new ForbidenError(forbidenErrMsg);
+      }
+      return Article.findByIdAndDelete(article._id);
     })
     .then((article) => res.send(article))
     .catch((err) => next(err));
