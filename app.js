@@ -11,11 +11,6 @@ const rateLimiter = require('./middlewares/rateLimiter');
 const errorHandler = require('./middlewares/errorHahdler');
 const { DATA_BASE } = require('./constants/config');
 
-const allowedCors = [
-  'http://bko-news.students.nomoreparties.xyz',
-  'https://bko-news.students.nomoreparties.xyz',
-  'http://localhost:3000',
-];
 const { PORT = 3000 } = process.env;
 
 const app = express();
@@ -34,13 +29,10 @@ app.use(requestLogger);
 
 // CORS
 app.use((req, res, next) => {
-  const { origin } = req.headers;
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Access-Control-Allow-Headers, Content-Type, Authorization, Origin, Accept');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
   res.header('Access-Control-Allow-Credentials', true);
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
   next();
 });
 
