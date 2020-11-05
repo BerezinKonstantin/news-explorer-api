@@ -14,7 +14,7 @@ const { DATA_BASE } = require('./constants/config');
 const allowedCors = [
   'http://bko-news.students.nomoreparties.xyz',
   'https://bko-news.students.nomoreparties.xyz',
-  'localhost:3000',
+  'http://localhost:3000',
 ];
 const { PORT = 3000 } = process.env;
 
