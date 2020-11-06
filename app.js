@@ -29,7 +29,10 @@ app.use(bodyParser.json());
 app.use(requestLogger);
 
 app.options('*', cors());
-
+app.options('*', (req, res) => {
+  res.sendStatus(200);
+  res.header('Access-Control-Allow-Origin', '*');
+});
 app.use('/', router);
 
 app.use(errorLogger);
