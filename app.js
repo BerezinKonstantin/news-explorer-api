@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const cors = require('cors');
 const { errors } = require('celebrate');
 
 const router = require('./routes');
@@ -13,6 +14,21 @@ const { DATA_BASE } = require('./constants/config');
 
 const { PORT = 3000 } = process.env;
 
+const whitelist = [
+  'https://api.bko-news.students.nomoreparties.xyz',
+  'http://api.bko-news.students.nomoreparties.xyz',
+  'localhost:3000',
+];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
 const app = express();
 
 mongoose.connect(DATA_BASE, {
@@ -27,17 +43,8 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-// CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin, Content-Type, Authorization, Origin, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Credentials', true);
-  if (req.method === 'OPTIONS') {
-    res.status(200);
-  }
-  next();
-});
+app.options('*', cors());
+app.use('*', cors(corsOptions));
 
 app.use('/', router);
 
