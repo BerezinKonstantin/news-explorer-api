@@ -22,7 +22,12 @@ const signIn = (req, res, next) => {
             JWT_SECRET,
             { expiresIn: '7d' },
           );
-          res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
+          res.cookie('token', token, {
+            maxAge: 3600000,
+            httpOnly: true,
+            sameSite: 'none',
+            secure: true,
+          });
           res.send({
             name: user.name,
             email: user.email,
