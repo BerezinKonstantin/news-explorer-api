@@ -28,11 +28,16 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-app.options('*', cors());
-app.options('*', (req, res) => {
-  res.sendStatus(200);
-  res.header('Access-Control-Allow-Origin', '*');
-});
+app.use(cors({
+  origin: [
+    'http://bko-news.students.nomoreparties.xyz',
+    'https://bko-news.students.nomoreparties.xyz',
+    'http://localhost:3000',
+    'localhost:3000',
+  ],
+  credentials: true,
+}));
+
 app.use('/', router);
 
 app.use(errorLogger);
