@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const cors = require('cors');
 const { errors } = require('celebrate');
 
 const router = require('./routes');
@@ -26,6 +27,16 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 app.use(requestLogger);
+
+app.use(cors({
+  origin: [
+    'http://bko-news.students.nomoreparties.xyz',
+    'https://bko-news.students.nomoreparties.xyz',
+    'http://localhost:3000',
+    'localhost:3000',
+  ],
+  credentials: true,
+}));
 
 app.use('/', router);
 
