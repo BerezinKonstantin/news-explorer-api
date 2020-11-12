@@ -29,7 +29,10 @@ app.use(bodyParser.json());
 app.use(requestLogger);
 
 app.use(cors({
-  origin: '*',
+  origin: [
+    'http://bko-news.students.nomoreparties.xyz',
+    'https://bko-news.students.nomoreparties.xyz',
+  ],
   credentials: true,
 }));
 
