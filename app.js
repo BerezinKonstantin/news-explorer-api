@@ -32,8 +32,6 @@ app.use(cors({
   origin: [
     'http://bko-news.students.nomoreparties.xyz',
     'https://bko-news.students.nomoreparties.xyz',
-    'http://localhost:3000',
-    'localhost:3000',
   ],
   credentials: true,
 }));
