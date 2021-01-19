@@ -12,7 +12,7 @@ const rateLimiter = require('./middlewares/rateLimiter');
 const errorHandler = require('./middlewares/errorHahdler');
 const { DATA_BASE } = require('./constants/config');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const app = express();
 
@@ -30,6 +30,7 @@ app.use(requestLogger);
 
 app.use(cors({
   origin: [
+    'http://localhost:3000',
     'http://bko-news.students.nomoreparties.xyz',
     'https://bko-news.students.nomoreparties.xyz',
   ],

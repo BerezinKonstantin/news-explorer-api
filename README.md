@@ -1,5 +1,10 @@
 # REST API для news-explorer
 
+Это backend для сервиса News Explorer:
+https://github.com/BerezinKonstantin/news-explorer-frontend
+
+Эта часть проекта представляет собой API для регистрации, аутентификации пользователей и сохранения статей.
+
 ## Функциональность
 
 Запросы к API:
@@ -22,11 +27,17 @@ DELETE /articles/articleId
 - Express
 - MongoDB
 
-## Публичный IP-адрес
+## Локальная установка
 
-84.201.139.169
+1. git clone https://github.com/BerezinKonstantin/news-explorer-api
+2. cd news-explorer-api
+3. npm i
 
-## Домен
+## Запуск проекта
 
-Для обращения к API используется поддомен:
-http://api.bko-news.students.nomoreparties.xyz
+Для работы с проектом вам понадобятся NodeJS, MongoDB, Postman.
+
+`npm run start` — запускает сервер   
+`npm run dev` — запускает сервер с hot-reload
+
+Локальный сервер доступен по адресу http://localhost:3001.
