@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
+const mongoose = require("mongoose");
+const validator = require("validator");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
       validator(v) {
         return validator.isEmail(v);
       },
-      message: 'Введен некорректный email',
+      message: "Введен некорректный email",
     },
   },
   password: {
@@ -27,4 +27,4 @@ const userSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model("user", userSchema);

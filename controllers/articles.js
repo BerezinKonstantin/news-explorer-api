@@ -1,21 +1,24 @@
-const Article = require('../models/articles');
-const NotFoundError = require('../middlewares/errorHandlers/notFoundError');
-const WrongDataError = require('../middlewares/errorHandlers/wrongDataError');
-const ForbidenError = require('../middlewares/errorHandlers/forbidenError');
-const { notFoundArticleErrMsg, forbidenErrMsg, wrongDataErrMsg } = require('../constants/errMessages');
+const Article = require("../models/articles");
+const NotFoundError = require("../middlewares/errorHandlers/notFoundError");
+const WrongDataError = require("../middlewares/errorHandlers/wrongDataError");
+const ForbidenError = require("../middlewares/errorHandlers/forbidenError");
+const {
+  notFoundArticleErrMsg,
+  forbidenErrMsg,
+  wrongDataErrMsg,
+} = require("../constants/errMessages");
 
 const getAllArticles = (req, res, next) => {
   Article.find({ owner: req.user._id })
     .then((articles) => {
-      res
-        .status(200)
-        .send(articles);
+      res.status(200).send(articles);
     })
     .catch((err) => next(err));
 };
 
 const deleteArticle = (req, res, next) => {
-  Article.findOne({ _id: req.params.articleId }).select('+owner')
+  Article.findOne({ _id: req.params.articleId })
+    .select("+owner")
     .orFail(new NotFoundError(notFoundArticleErrMsg))
     .then((article) => {
       if (String(article.owner) !== req.user._id) {
@@ -41,7 +44,7 @@ const postArticle = (req, res, next) => {
   Article.create(data)
     .then((article) => res.status(201).send(article))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === "ValidationError") {
         throw new WrongDataError(wrongDataErrMsg);
       }
       next(err);
