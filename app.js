@@ -30,9 +30,9 @@ app.use(requestLogger);
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "http://bko-news.students.nomoreparties.xyz",
-      "https://bko-news.students.nomoreparties.xyz",
+      "https://berezinkonstantin.github.io/",
+      "https://berezinkonstantin.github.io/news-explorer-frontend/",
+      "https://berezinkonstantin.github.io/saved-news/",
     ],
     credentials: true,
   })
