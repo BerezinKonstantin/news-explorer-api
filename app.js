@@ -12,8 +12,7 @@ const rateLimiter = require("./middlewares/rateLimiter");
 const errorHandler = require("./middlewares/errorHahdler");
 const { DATA_BASE } = require("./constants/config");
 
-const { PORT = 3001 } = process.env;
-
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 mongoose.connect(DATA_BASE, {
